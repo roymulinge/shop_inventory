@@ -1,0 +1,30 @@
+{% extends 'shop_app/base.html' %}
+
+{% block title %}Daily Summary{% endblock %}
+
+{% block content %}
+<h1 style="text-align:center; margin-bottom:20px;">Daily Summary</h1>
+
+<div style="max-width:700px; margin:auto; display:flex; gap:20px; flex-wrap:wrap; justify-content:center;">
+    <div style="flex:1; min-width:200px; background:#fff; padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); text-align:center;">
+        <h3>Total Products in Stock</h3>
+        <p style="font-size:1.5em; font-weight:bold;">{{ total_qty }}</p>
+    </div>
+    <div style="flex:1; min-width:200px; background:#fff; padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); text-align:center;">
+        <h3>Total Value of Stock</h3>
+        <p style="font-size:1.5em; font-weight:bold;">${{ total_value }}</p>
+    </div>
+</div>
+
+<h2 style="margin-top:30px; text-align:center;">Product Details</h2>
+<div style="max-width:700px; margin:auto; margin-top:15px;">
+    {% for product in products %}
+        <div style="background:#fff; padding:15px; margin-bottom:10px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); display:flex; justify-content:space-between;">
+            <span>{{ product.name }}</span>
+            <span>Qty: {{ product.quantity }} | ${{ product.selling_price }}</span>
+        </div>
+    {% empty %}
+        <p style="text-align:center;">No products yet</p>
+    {% endfor %}
+</div>
+{% endblock %}

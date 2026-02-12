@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Shop App{% endblock %}</title>
+<style>
+body { font-family: Arial; margin:0; background:#f7f7f7; }
+nav {
+    background:#2196F3;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 20px;
+    flex-wrap:wrap;
+}
+nav a {
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    padding:8px 12px;
+    border-radius:6px;
+    transition:0.3s;
+}
+nav a:hover { background: rgba(255,255,255,0.2); }
+nav .logo { font-size:1.2em; font-weight:bold; }
+nav .menu { display:flex; gap:10px; flex-wrap:wrap; }
+.container { max-width:900px; margin:auto; padding:15px; }
+.messages { background-color: #e0ffe0; padding: 10px; margin-bottom: 10px; border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">
+        <span style="color:white; font-weight:bold;">{{ request.user.sellerprofile.shop_name }}</span>
+    </div>
+    <div class="menu">
+        <a href="{% url 'product_list' %}">Products</a>
+        <a href="{% url 'add_product' %}">Add Product</a>
+        <a href="{% url 'daily_summary' %}">Daily Summary</a>
+
+        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" style="
+                background:none; 
+                border:none; 
+                color:white; 
+                font-weight:bold; 
+                cursor:pointer; 
+                padding:8px 12px; 
+                border-radius:6px;
+                transition:0.3s;
+            " 
+            onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+            onmouseout="this.style.background='transparent'">
+                Logout
+            </button>
+        </form>
+    </div>
+</nav>
+
+<div class="container">
+    {% if messages %}
+    <div class="messages">
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>
